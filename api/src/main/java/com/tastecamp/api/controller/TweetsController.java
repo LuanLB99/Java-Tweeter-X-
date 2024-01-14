@@ -2,10 +2,11 @@ package com.tastecamp.api.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tastecamp.api.dto.UserDTO;
+import com.tastecamp.api.dto.TweetsDTO;
+import com.tastecamp.api.model.Tweet;
 import com.tastecamp.api.model.User;
 import com.tastecamp.api.repository.UserRepository;
-import com.tastecamp.api.service.UserService;
+import com.tastecamp.api.service.TweetsService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,24 +21,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/users")
-public class UsersController {
-    
+@RequestMapping("/tweets")
+public class TweetsController {
+
     @Autowired
-    private UserService UserService;
+    private TweetsService tweetsService;
     
     @GetMapping
-    public List<User> getUsers() {
-        return UserService.listUsers();
+    public List<Tweet> listTweets() {
+        return tweetsService.listTweets();
     }
 
-    @PostMapping("sign-up")
-    public String createUser(@RequestBody UserDTO user) {
-        UserService.createUser(user);
-       
+    @PostMapping
+    public String postMethodName(@RequestBody TweetsDTO tweet) {
+        tweetsService.createTWeet(tweet);
+        
         return "OK";
     }
     
-    
-
 }
