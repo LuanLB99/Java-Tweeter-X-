@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "Users")
 @NoArgsConstructor
 
-public class User {
+public class UserModel {
 
-    public User(UserDTO data){
-        this.username = data.username();
-        this.avatar = data.avatar();
+    public UserModel(UserDTO data){
+        this.username = data.getUsername();
+        this.avatar = data.getAvatar();
     }
 
     @Id
@@ -33,6 +33,6 @@ public class User {
     private String username;
 
     @Column(length = 100, nullable = false)
-    private URL avatar;
+    private String avatar;
 
 }

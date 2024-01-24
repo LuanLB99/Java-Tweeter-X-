@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tastecamp.api.dto.TweetsDTO;
 import com.tastecamp.api.model.Tweet;
-import com.tastecamp.api.model.User;
-import com.tastecamp.api.repository.UserRepository;
 import com.tastecamp.api.service.TweetsService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
