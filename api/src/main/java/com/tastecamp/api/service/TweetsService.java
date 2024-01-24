@@ -1,12 +1,14 @@
 package com.tastecamp.api.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastecamp.api.dto.TweetsDTO;
-import com.tastecamp.api.model.Tweet;
+import com.tastecamp.api.exception.NotFoundException;
+import com.tastecamp.api.model.TweetModel;
 import com.tastecamp.api.model.UserModel;
 import com.tastecamp.api.repository.TweetsRepository;
 import com.tastecamp.api.repository.UserRepository;
@@ -21,13 +23,18 @@ public class TweetsService {
     @Autowired
     private TweetsRepository tweetsRepository;
 
-    public List<Tweet> listTweets(){
+    public List<TweetModel> listTweets(){
         return tweetsRepository.findAll();
     }
 
-    public void createTWeet(TweetsDTO tweet){
-        String userTweet = tweet.username();
-       UserModel user = userRepository.findByUsername(userTweet);
-       /* Tweet newTweet = tweetsRepository.save(new Tweet(user.getUsername(), user.getAvatar(), tweet.tweet())); */
+    public TweetModel createTWeet(TweetsDTO tweet) throws NotFoundException{
+       Optional<UserModel> userOptional = userRepository.findById(tweet.getUserId());
+
+       if(!userOptional.isPresent()){
+        throw new NotFoundException("Usuário não encontrado!");
+       }
+       TweetModel newTweet = tweet.convertToTweetModel(userOptional.get());
+       tweetsRepository.save(newTweet);
+       return newTweet;
     }
 }

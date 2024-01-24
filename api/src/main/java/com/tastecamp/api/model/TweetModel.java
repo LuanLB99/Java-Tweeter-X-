@@ -2,12 +2,13 @@ package com.tastecamp.api.model;
 
 import java.net.URL;
 
-
+import com.tastecamp.api.model.UserModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TweetModel {
     
-    public TweetModel(String username, URL avatar, String tweet){
-        this.text = tweet;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -29,7 +26,7 @@ public class TweetModel {
     @Column(length = 300, nullable = false)
     private String text;
 
-    @Column(nullable = false)
+    @ManyToOne
     private UserModel user;
 
 

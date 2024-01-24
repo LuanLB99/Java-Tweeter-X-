@@ -1,7 +1,6 @@
 package com.tastecamp.api.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class UserService {
         UserModel haveUser = userRepository.findByUsername(user.getUsername());
         if(haveUser == null){
             userRepository.save(user);
-              
+
         } else if (haveUser.getUsername().equals(user.getUsername())){
             throw new ConflictUserException();
         }
