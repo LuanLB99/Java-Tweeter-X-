@@ -12,10 +12,10 @@ import lombok.Data;
 @Data
 public class TweetsDTO{
     
-    @NotNull
+    @NotNull(message = "O ID precisa ser um número")
     private Long userId;
 
-    @NotBlank(message = "O ID precisa ser um número")
+    @NotBlank(message = "O texto de tweet não pode estar vazio.")
     @Size(max = 280, message = "O máximo de caractéres é 280!")
     private String text;
 

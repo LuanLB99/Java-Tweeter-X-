@@ -27,14 +27,16 @@ public class TweetsService {
         return tweetsRepository.findAll();
     }
 
-    public TweetModel createTWeet(TweetsDTO tweet) throws NotFoundException{
-       Optional<UserModel> userOptional = userRepository.findById(tweet.getUserId());
+    public List<TweetModel> listTweetUserById(Long userId){
+        return tweetsRepository.findAllByUserId(userId);
+    }
 
-       if(!userOptional.isPresent()){
-        throw new NotFoundException("Usuário não encontrado!");
-       }
-       TweetModel newTweet = tweet.convertToTweetModel(userOptional.get());
-       tweetsRepository.save(newTweet);
-       return newTweet;
+    public TweetModel createTWeet(TweetsDTO tweet) throws NotFoundException{
+        UserModel user = userRepository.findById(tweet.getUserId())
+        .orElseThrow(() -> new NotFoundException("Usuário não encontrado!"));
+
+        TweetModel newTweet = tweet.convertToTweetModel(user);
+        tweetsRepository.save(newTweet);
+        return newTweet;
     }
 }

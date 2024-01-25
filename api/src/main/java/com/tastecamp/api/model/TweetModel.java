@@ -1,8 +1,5 @@
 package com.tastecamp.api.model;
 
-import java.net.URL;
-
-import com.tastecamp.api.model.UserModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

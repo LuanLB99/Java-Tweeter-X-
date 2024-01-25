@@ -18,8 +18,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -42,6 +44,18 @@ public class TweetsController {
        
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Object> getTweetsByUserId(@PathVariable Long userId) {
+        try {
+            List<TweetModel> tweets = tweetsService.listTweetUserById(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(tweets);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+       
+    }
+    
+
     @PostMapping
     public ResponseEntity<Object> postMethodName(@RequestBody @Valid TweetsDTO formTweet, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
@@ -55,6 +69,7 @@ public class TweetsController {
 
         } catch (NotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         } 
